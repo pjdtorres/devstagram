@@ -2,10 +2,8 @@ import Dropzone from "dropzone";
 
 Dropzone.autoDiscover = false;
 
-if(document.querySelector('#dropzone')) {
-
 const dropzone = new Dropzone("#dropzone", {
-    dictDefaultMessage: "Faz upload da imagem",
+    dictDefaultMessage: "Upload da imagem",
     acceptedFiles: ".png,.jpg,.jpeg,.gif",
     addRemoveLinks: true,
     dictRemoveFile: "Apagar Arquivo",
@@ -13,6 +11,8 @@ const dropzone = new Dropzone("#dropzone", {
     uploadMultiple: false,
 
     init: function () {
+        // alert('dropzone criado!');
+
         if (document.querySelector('[name="imagem"]').value.trim()) {
             const imagemPublicada = {};
             imagemPublicada.size = 1234;
@@ -32,15 +32,38 @@ const dropzone = new Dropzone("#dropzone", {
                 "dz-complete"
             );
         }
+
     },
+
 });
 
+// dropzone.on("sending", function (file, xhr, formData) {
+//     // console.log(file);    
+//     console.log(formData);
+// })
+
+
 dropzone.on("success", function (file, response) {
+    // console.log(response.imagem);
     document.querySelector('[name="imagem"]').value = response.imagem;
-});
+})
+
+// // dropzone.on("error", function (file, message) {
+// //     console.log(message);
+// // })
+
+
+
+// dropzone.on("removedfile", function (file, message) {
+//     // console.log('Arquivo eliminado');
+//     document.querySelector('[name="imagem"]').value = "";
+// });
+
+
+// // dropzone.on("success", function (file, response) {
+// //     document.querySelector('[name="imagem"]').value = response.imagen;
+// // });
 
 dropzone.on("removedfile", function () {
     document.querySelector('[name="imagem"]').value = "";
 });
-
-}
